@@ -56,8 +56,8 @@ public class RepositoryActivityFile implements RepositoryActivity{
 		
 		while( i < activities.size() )
 		{
-			if ( activities.get(i).getStart().compareTo(activity.getDuration()) < 0 &&
-					activity.getStart().compareTo(activities.get(i).getDuration()) < 0 )
+			if ( activities.get(i).getStartDate().compareTo(activity.getEndDate()) < 0 &&
+					activity.getStartDate().compareTo(activities.get(i).getEndDate()) < 0 )
 				conflicts = true;
 			i++;
 		}
@@ -118,7 +118,7 @@ public class RepositoryActivityFile implements RepositoryActivity{
 			Activity ac = result1.get(0);
 			int index = 0;
 			for (int i = 1; i<result1.size(); i++)
-				if (ac.getStart().compareTo(result1.get(i).getStart())<0) 
+				if (ac.getStartDate().compareTo(result1.get(i).getStartDate())<0)
 				{
 					index = i;
 					ac = result1.get(i);
@@ -136,19 +136,19 @@ public class RepositoryActivityFile implements RepositoryActivity{
 		List<Activity> result1 = new LinkedList<Activity>();
 		for (Activity a : activities)
 			if (a.getName().equals(name))
-				if ((a.getStart().getYear() == d.getYear() &&
-					a.getStart().getMonth() == d.getMonth() &&
-					a.getStart().getDate() == d.getDate()) ||
-					( a.getDuration().getYear() == d.getYear() && 
-					a.getDuration().getMonth() == d.getMonth() &&
-					a.getDuration().getDate() == d.getDate())) result1.add(a);
+				if ((a.getStartDate().getYear() == d.getYear() &&
+					a.getStartDate().getMonth() == d.getMonth() &&
+					a.getStartDate().getDate() == d.getDate()) ||
+					( a.getEndDate().getYear() == d.getYear() &&
+					a.getEndDate().getMonth() == d.getMonth() &&
+					a.getEndDate().getDate() == d.getDate())) result1.add(a);
 		List<Activity> result = new LinkedList<Activity>();
 		while (result1.size() > 0 )
 		{
 			Activity ac = result1.get(0);
 			int index = 0;
 			for (int i = 1; i<result1.size(); i++)
-				if (ac.getStart().compareTo(result1.get(i).getStart())>0) 
+				if (ac.getStartDate().compareTo(result1.get(i).getStartDate())>0)
 				{
 					index = i;
 					ac = result1.get(i);

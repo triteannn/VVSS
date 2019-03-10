@@ -96,8 +96,8 @@ public class MainClass {
 			List<Activity> act = activityRep
 					.activitiesOnDate(user.getName(), d);
 			for (Activity a : act) {
-				System.out.printf("%s - %s: %s - %s with: ", a.getStart()
-						.toString(), a.getDuration().toString(), a
+				System.out.printf("%s - %s: %s - %s with: ", a.getStartDate()
+						.toString(), a.getEndDate().toString(), a
 						.getDescription());
 				for (Contact con : a.getContacts())
 					System.out.printf("%s, ", con.getName());

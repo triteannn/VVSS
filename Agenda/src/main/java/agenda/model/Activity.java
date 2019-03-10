@@ -8,13 +8,13 @@ import agenda.repository.interfaces.RepositoryContact;
 
 public class Activity {
 	private String name;
-	private Date start;
-	private Date duration;
+	private Date startDate;
+	private Date endDate;
 	private List<Contact> contacts;
 	private String description;
 	
-	public Activity(String name, Date start, Date end, List<Contact> contacts,
-			String description) {
+	public Activity(String name, Date startDate, Date endDate, List<Contact> contacts,
+					String description) {
 		this.name = name;
 		this.description = description;
 		if (contacts == null)
@@ -22,30 +22,30 @@ public class Activity {
 		else
 			this.contacts = new LinkedList<Contact>(contacts);
 
-		this.start = new Date();
-		this.start.setTime(start.getTime());
-		this.duration = new Date();
-		this.duration.setTime(end.getTime());
+		this.startDate = new Date();
+		this.startDate.setTime(startDate.getTime());
+		this.endDate = new Date();
+		this.endDate.setTime(endDate.getTime());
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public Date getStart() {
-		return start;
+	public Date getStartDate() {
+		return startDate;
 	}
 
-	public void setStart(Date start) {
-		this.start = start;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 
-	public Date getDuration() {
-		return duration;
+	public Date getEndDate() {
+		return endDate;
 	}
 
-	public void setDuration(Date duration) {
-		this.duration = duration;
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 	public List<Contact> getContacts() {
@@ -69,15 +69,15 @@ public class Activity {
 		if (!(obj instanceof Activity))
 			return false;
 		Activity act = (Activity) obj;
-		if (act.description.equals(description) && start.equals(act.start)
-				&& duration.equals(act.duration) && name.equals(act.name))
+		if (act.description.equals(description) && startDate.equals(act.startDate)
+				&& endDate.equals(act.endDate) && name.equals(act.name))
 			return true;
 		return false;
 	}
 
 	public boolean intersect(Activity act) {
-		if (start.compareTo(act.duration) < 0
-				&& act.start.compareTo(duration) < 0)
+		if (startDate.compareTo(act.endDate) < 0
+				&& act.startDate.compareTo(endDate) < 0)
 			return true;
 		return false;
 	}
@@ -87,9 +87,9 @@ public class Activity {
 		StringBuilder sb = new StringBuilder();
 		sb.append(name);
 		sb.append("#");
-		sb.append(start.getTime());
+		sb.append(startDate.getTime());
 		sb.append("#");
-		sb.append(duration.getTime());
+		sb.append(endDate.getTime());
 		sb.append("#");
 		sb.append(description);
 		sb.append("#");

@@ -52,8 +52,8 @@ public class RepositoryActivityMock implements RepositoryActivity {
 		
 		while( i < activities.size() )
 		{
-			if ( activities.get(i).getStart().compareTo(activity.getDuration()) < 0 &&
-					activity.getStart().compareTo(activities.get(i).getDuration()) < 0 )
+			if ( activities.get(i).getStartDate().compareTo(activity.getEndDate()) < 0 &&
+					activity.getStartDate().compareTo(activities.get(i).getEndDate()) < 0 )
 				conflicts = true;
 			i++;
 		}
@@ -104,7 +104,7 @@ public class RepositoryActivityMock implements RepositoryActivity {
 		List<Activity> result = new LinkedList<Activity>();
 		for (Activity a : activities)
 			if (a.getName().equals(name))
-				if (a.getStart().compareTo(d) <= 0 && d.compareTo(a.getDuration()) <= 0 ) result.add(a);
+				if (a.getStartDate().compareTo(d) <= 0 && d.compareTo(a.getEndDate()) <= 0 ) result.add(a);
 		return result;
 	}
 
