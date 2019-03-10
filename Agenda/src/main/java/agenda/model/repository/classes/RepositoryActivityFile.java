@@ -16,7 +16,7 @@ import agenda.model.repository.interfaces.RepositoryContact;
 
 public class RepositoryActivityFile implements RepositoryActivity{
 
-	private static final String filename = "bin\\files\\activities.dat"; 
+	private static final String filename = "files\\activities.dat";
 	private List<Activity> activities;
 	
 	public RepositoryActivityFile(RepositoryContact repcon) throws Exception
