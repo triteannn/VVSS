@@ -7,9 +7,9 @@ import org.junit.Test;
 
 import agenda.exceptions.InvalidFormatException;
 
-import agenda.model.base.Contact;
-import agenda.model.repository.classes.RepositoryContactMock;
-import agenda.model.repository.interfaces.RepositoryContact;
+import agenda.model.Contact;
+import agenda.repository.classes.RepositoryContactMock;
+import agenda.repository.interfaces.RepositoryContact;
 
 
 public class AddContactTest {

@@ -7,12 +7,12 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import agenda.model.base.Activity;
-import agenda.model.base.Contact;
-import agenda.model.repository.classes.RepositoryActivityFile;
-import agenda.model.repository.classes.RepositoryContactFile;
-import agenda.model.repository.interfaces.RepositoryActivity;
-import agenda.model.repository.interfaces.RepositoryContact;
+import agenda.model.Activity;
+import agenda.model.Contact;
+import agenda.repository.classes.RepositoryActivityFile;
+import agenda.repository.classes.RepositoryContactFile;
+import agenda.repository.interfaces.RepositoryActivity;
+import agenda.repository.interfaces.RepositoryContact;
 
 import org.junit.Before;
 import org.junit.Test;

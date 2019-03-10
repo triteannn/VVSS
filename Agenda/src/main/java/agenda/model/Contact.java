@@ -1,4 +1,4 @@
-package agenda.model.base;
+package agenda.model;
 
 import agenda.exceptions.InvalidFormatException;
 

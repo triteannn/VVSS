@@ -1,4 +1,4 @@
-package agenda.model.repository.classes;
+package agenda.repository.classes;
 
 public class RepositoryUserMock {//implements RepositoryUser{
 

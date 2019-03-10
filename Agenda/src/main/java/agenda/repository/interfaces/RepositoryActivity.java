@@ -1,9 +1,9 @@
-package agenda.model.repository.interfaces;
+package agenda.repository.interfaces;
 
 import java.util.Date;
 import java.util.List;
 
-import agenda.model.base.Activity;
+import agenda.model.Activity;
 
 public interface RepositoryActivity {
 

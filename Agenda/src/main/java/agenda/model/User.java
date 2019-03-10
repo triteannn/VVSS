@@ -1,4 +1,4 @@
-package agenda.model.base;
+package agenda.model;
 
 public class User {
 	private String username;

@@ -1,4 +1,4 @@
-package agenda.model.repository.classes;
+package agenda.repository.classes;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -10,8 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import agenda.exceptions.InvalidFormatException;
-import agenda.model.base.Contact;
-import agenda.model.repository.interfaces.RepositoryContact;
+import agenda.model.Contact;
+import agenda.repository.interfaces.RepositoryContact;
 
 public class RepositoryContactFile implements RepositoryContact {
 

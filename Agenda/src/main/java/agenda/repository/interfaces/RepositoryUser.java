@@ -1,8 +1,8 @@
-package agenda.model.repository.interfaces;
+package agenda.repository.interfaces;
 
 import java.util.List;
 
-import agenda.model.base.User;
+import agenda.model.User;
 
 public interface RepositoryUser {
 
