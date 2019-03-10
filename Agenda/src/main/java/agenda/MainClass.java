@@ -3,10 +3,7 @@ package agenda;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import agenda.exceptions.InvalidFormatException;
 
@@ -29,6 +26,7 @@ public class MainClass {
 
 	public static void main(String[] args) {
 		BufferedReader in = null;
+
 		try {
 			RepositoryContact contactRep = new RepositoryContactFile();
 			RepositoryUser userRep = new RepositoryUserFile();
@@ -37,6 +35,7 @@ public class MainClass {
 
 			User user = null;
 			in = new BufferedReader(new InputStreamReader(System.in));
+
 			while (user == null) {
 				System.out.printf("Enter username: ");
 				String u = in.readLine();
@@ -74,7 +73,7 @@ public class MainClass {
 			// System.out.println(a.toString());
 
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 		System.out.println("Program over and out\n");
 	}
