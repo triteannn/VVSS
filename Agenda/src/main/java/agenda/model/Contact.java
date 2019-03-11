@@ -64,11 +64,11 @@ public class Contact {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(Name);
-		sb.append("#");
+		sb.append(" ");
 		sb.append(Address);
-		sb.append("#");
+		sb.append(" ");
 		sb.append(Telefon);
-		sb.append("#");
+		sb.append(" ");
 		return sb.toString();
 	}
 	

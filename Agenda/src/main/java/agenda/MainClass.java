@@ -164,6 +164,7 @@ public class MainClass {
 			Contact c = new Contact(name, adress, telefon);
 
 			contactRep.addContact(c);
+			contactRep.saveContracts();
 
 			System.out.printf("S-a adugat cu succes\n");
 		} catch (IOException e) {
