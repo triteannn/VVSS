@@ -141,6 +141,7 @@ public class MainClass {
 					new LinkedList<Contact>(), description);
 
 			activityRep.addActivity(act);
+			activityRep.saveActivities();
 
 			System.out.printf("S-a adugat cu succes\n");
 		} catch (IOException e) {

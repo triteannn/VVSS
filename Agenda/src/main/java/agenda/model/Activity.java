@@ -105,13 +105,13 @@ public class Activity {
 			String[] str = line.split("#");
 			String name = str[0];
 			Date start = new Date(Long.parseLong(str[1]));
-			Date duration = new Date(Long.parseLong(str[2]));
+			Date end = new Date(Long.parseLong(str[2]));
 			String description = str[3];
 			List<Contact> conts = new LinkedList<Contact>();
 			for (int i = 5; i < str.length; i++) {
 				conts.add(repcon.getByName(str[i]));
 			}
-			return new Activity(name, start, duration, conts, description);
+			return new Activity(name, start, end, conts, description);
 		} catch (Exception e) {
 			return null;
 		}
