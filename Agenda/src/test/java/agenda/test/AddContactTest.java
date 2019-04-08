@@ -30,7 +30,7 @@ public class AddContactTest {
 	}
 	
 	@Test
-	public void testPhoneNumberStartCharacter()
+	public void testPhoneNumberStartCharacterIsGood()
 	{
 		try {
 			contact = new Contact("Tudor", "Constructorilor", "+40712345678");
@@ -43,6 +43,16 @@ public class AddContactTest {
 		assertEquals(4, mockContactRepository.count());
 		for(Contact c : mockContactRepository.getContacts()) {
 			assertTrue(c.getTelefon().startsWith("+") || c.getTelefon().startsWith("0"));
+		}
+	}
+
+	@Test
+	public void testPhoneNumberStartCharacterIsNotGood()
+	{
+		try {
+			contact = new Contact("Tudor", "Constructorilor", "$40712345678");
+		} catch (InvalidFormatException e) {
+			assertEquals("Invalid phone number", e.getCause().getMessage());
 		}
 	}
 
