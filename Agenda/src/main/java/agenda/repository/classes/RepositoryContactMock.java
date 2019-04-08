@@ -14,11 +14,11 @@ private List<Contact> contacts;
 	public RepositoryContactMock() {
 		contacts = new LinkedList<Contact>();
 		try {
-			Contact c = new Contact("Name1", "address1", "+4071122334455");
+			Contact c = new Contact("Name", "address1", "+4071122334455");
 			contacts.add(c);
-			c = new Contact("Name2", "address 2", "+4071122334466");
+			c = new Contact("Another name", "address 2", "+4071122334466");
 			contacts.add(c);
-			c = new Contact("Name3", "address 3", "+4071122338866");
+			c = new Contact("My name", "address 3", "+4071122338866");
 			contacts.add(c);
 		} catch (InvalidFormatException e) {
 			// TODO Auto-generated catch block

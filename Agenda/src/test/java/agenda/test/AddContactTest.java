@@ -14,62 +14,90 @@ import agenda.repository.interfaces.RepositoryContact;
 
 public class AddContactTest {
 
-	private Contact con;
-	private RepositoryContact rep;
+	private Contact contact;
+	private RepositoryContact mockContactRepository;
 	
 	@Before
-	public void setUp() throws Exception {
-		rep = new RepositoryContactMock();
+	public void setUp() {
+		mockContactRepository = new RepositoryContactMock();
 	}
 	
 	@Test
-	public void testCase1()
+	public void testPhoneNumberStartCharacter()
 	{
 		try {
-			con = new Contact("name", "address1", "+4071122334455");
+			contact = new Contact("Tudor", "Constructorilor", "+4071122334455");
 		} catch (InvalidFormatException e) {
-			assertTrue(false);
+			fail();
 		}
-		//int n = rep.count();
-		rep.addContact(con);
-		for(Contact c : rep.getContacts())
-			if (c.equals(con))
-			{
-				assertTrue(true);
-				break;
+		assertEquals(3, mockContactRepository.count());
+		mockContactRepository.addContact(contact);
+		try {
+			mockContactRepository.addContact(new Contact(contact.getName(), contact.getAddress(), contact.getTelefon().substring(2)));
+		} catch (InvalidFormatException e) {
+			fail();
+		}
+		assertEquals(5, mockContactRepository.count());
+		for(Contact c : mockContactRepository.getContacts()) {
+			assertTrue(c.getTelefon().startsWith("+") || c.getTelefon().startsWith("0"));
+		}
+	}
+
+	@Test
+	public void testNameIsNotNull()
+	{
+		try {
+			contact = new Contact("Tudor", "Constructorilor", "+4071122334455");
+		} catch (InvalidFormatException e) {
+			fail();
+		}
+		assertTrue(contact.getName() != null && contact.getName().length() > 0);
+		assertEquals(3, mockContactRepository.count());
+		mockContactRepository.addContact(contact);
+		assertEquals(4, mockContactRepository.count());
+		for(Contact c : mockContactRepository.getContacts()) {
+			assertTrue(c.getName() != null && c.getName().length() > 0);
+		}
+	}
+
+	@Test
+	public void testNameShouldOnlyContainLetters()
+	{
+		try {
+			contact = new Contact("Tudor", "Constructorilor", "+4071122334455");
+		} catch (InvalidFormatException e) {
+			fail();
+		}
+
+		for (Character c : contact.getName().toCharArray()) {
+			if (!Character.isSpaceChar(c))
+				assertTrue(Character.isLetter(c));
+		}
+		assertEquals(3, mockContactRepository.count());
+		mockContactRepository.addContact(contact);
+		assertEquals(4, mockContactRepository.count());
+		for(Contact contact : mockContactRepository.getContacts()) {
+			for (Character c : contact.getName().toCharArray()) {
+				if (!Character.isSpaceChar(c))
+					assertTrue(Character.isLetter(c));
 			}
-		//assertTrue(n+1 == rep.count());
-	}
-	
-	@Test
-	public void testCase2()
-	{
-		try{
-			rep.addContact((Contact) new Object());
 		}
-		catch(Exception e)
-		{
-			assertTrue(true);
-		}	
 	}
-	
+
 	@Test
-	public void testCase3()
+	public void testPhoneNumberIsNotNull()
 	{
-		for(Contact c : rep.getContacts())
-			rep.removeContact(c);
-		
 		try {
-			con = new Contact("name", "address1", "+071122334455");
-			rep.addContact(con);
+			contact = new Contact("Tudor", "Constructorilor", "+4071122334455");
 		} catch (InvalidFormatException e) {
-			assertTrue(false);
+			fail();
 		}
-		int n  = rep.count();
-		if (n == 1) 
-			if (con.equals(rep.getContacts().get(0))) assertTrue(true);
-			else assertTrue(false);
-		else assertTrue(false);
+		assertTrue(contact.getTelefon() != null && contact.getTelefon().length() > 0);
+		assertEquals(3, mockContactRepository.count());
+		mockContactRepository.addContact(contact);
+		assertEquals(4, mockContactRepository.count());
+		for(Contact c : mockContactRepository.getContacts()) {
+			assertTrue(c.getTelefon() != null && c.getTelefon().length() > 0);
+		}
 	}
-	
 }

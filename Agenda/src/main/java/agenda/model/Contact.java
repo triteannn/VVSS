@@ -1,6 +1,7 @@
 package agenda.model;
 
 import agenda.exceptions.InvalidFormatException;
+import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 
 public class Contact {
 	private String Name;
@@ -74,9 +75,16 @@ public class Contact {
 	
 	private static boolean validName(String str)
 	{
-		
 		String[] s = str.split("[\\p{Punct}\\s]+");
-		if (s.length>2) return false;
+		if (s.length>2) {
+			return false;
+		} else {
+			for (String string : s) {
+				for (Character c : string.toCharArray()) {
+					if (!Character.isLetter(c)) return false;
+				}
+			}
+		}
 		return true;
 	}
 	
