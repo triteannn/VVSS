@@ -1,7 +1,6 @@
 package agenda.model;
 
 import agenda.exceptions.InvalidFormatException;
-import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 
 public class Contact {
 	private String Name;
@@ -75,31 +74,37 @@ public class Contact {
 	
 	private static boolean validName(String str)
 	{
-		String[] s = str.split("[\\p{Punct}\\s]+");
-		if (s.length>2) {
-			return false;
-		} else {
-			for (String string : s) {
-				for (Character c : string.toCharArray()) {
-					if (!Character.isLetter(c)) return false;
+		if (str.length() >= 2 && str.length() <= 25) {
+			String[] s = str.split("[\\p{Punct}\\s]+");
+			if (s.length>2) {
+				return false;
+			} else {
+				for (String string : s) {
+					for (Character c : string.toCharArray()) {
+						if (!Character.isLetter(c)) return false;
+					}
 				}
 			}
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	private static boolean validAddress(String str)
 	{
-		return true;
+		return str.length() >= 5 && str.length() <= 20;
 	}
 	
 	private static boolean validTelefon(String tel)
 	{
-		String[] s = tel.split("[\\p{Punct}\\s]+");
-		if (tel.charAt(0) == '+' && s.length == 2 ) return true;
-		if (tel.charAt(0) != '0')return false;
-		if (s.length != 1) return false;
-		return true;
+		if (tel.length() == 10 || tel.length() == 12) {
+			String[] s = tel.split("[\\p{Punct}\\s]+");
+			if (tel.charAt(0) == '+' && s.length == 2 ) return true;
+			if (tel.charAt(0) != '0')return false;
+			if (s.length != 1) return false;
+			return true;
+		}
+		return false;
 	}
 	
 		

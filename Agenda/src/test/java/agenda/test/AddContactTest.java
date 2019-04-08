@@ -2,6 +2,7 @@ package agenda.test;
 
 import static org.junit.Assert.*;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,13 +21,19 @@ public class AddContactTest {
 	@Before
 	public void setUp() {
 		mockContactRepository = new RepositoryContactMock();
+		contact = null;
+	}
+
+	@After
+	public void tearDown() {
+		contact = null;
 	}
 	
 	@Test
 	public void testPhoneNumberStartCharacter()
 	{
 		try {
-			contact = new Contact("Tudor", "Constructorilor", "+4071122334455");
+			contact = new Contact("Tudor", "Constructorilor", "+40712345678");
 		} catch (InvalidFormatException e) {
 			fail();
 		}
@@ -47,7 +54,7 @@ public class AddContactTest {
 	public void testNameIsNotNull()
 	{
 		try {
-			contact = new Contact("Tudor", "Constructorilor", "+4071122334455");
+			contact = new Contact("Tudor", "Constructorilor", "0712345678");
 		} catch (InvalidFormatException e) {
 			fail();
 		}
@@ -64,7 +71,7 @@ public class AddContactTest {
 	public void testNameShouldOnlyContainLetters()
 	{
 		try {
-			contact = new Contact("Tudor", "Constructorilor", "+4071122334455");
+			contact = new Contact("Tudor", "Constructorilor", "0712345678");
 		} catch (InvalidFormatException e) {
 			fail();
 		}
@@ -88,7 +95,7 @@ public class AddContactTest {
 	public void testPhoneNumberIsNotNull()
 	{
 		try {
-			contact = new Contact("Tudor", "Constructorilor", "+4071122334455");
+			contact = new Contact("Tudor", "Constructorilor", "0712345678");
 		} catch (InvalidFormatException e) {
 			fail();
 		}
@@ -98,6 +105,203 @@ public class AddContactTest {
 		assertEquals(4, mockContactRepository.count());
 		for(Contact c : mockContactRepository.getContacts()) {
 			assertTrue(c.getTelefon() != null && c.getTelefon().length() > 0);
+		}
+	}
+
+	@Test
+	public void testPhoneNumberLength()
+	{
+		try {
+			contact = new Contact("Tudor", "Constructorilor", "071234567");
+			fail();
+		} catch (InvalidFormatException e) {
+			assertNull(contact);
+		}
+
+		contact = null;
+
+		try {
+			contact = new Contact("Tudor", "Constructorilor", "0712345678");
+			assertNotNull(contact);
+		} catch (InvalidFormatException e) {
+			fail();
+		}
+
+		contact = null;
+
+		try {
+			contact = new Contact("Tudor", "Constructorilor", "+0712345678");
+			fail();
+		} catch (InvalidFormatException e) {
+			assertNull(contact);
+		}
+
+		contact = null;
+
+		try {
+			contact = new Contact("Tudor", "Constructorilor", "+40712345678");
+			assertNotNull(contact);
+		} catch (InvalidFormatException e) {
+			fail();
+		}
+
+		contact = null;
+
+		try {
+			contact = new Contact("Tudor", "Constructorilor", "+407123456789");
+			fail();
+		} catch (InvalidFormatException e) {
+			assertNull(contact);
+		}
+	}
+
+	@Test
+	public void testNameLength()
+	{
+		try {
+			contact = new Contact("T", "Constructorilor", "0712345678");
+			fail();
+		} catch (InvalidFormatException e) {
+			assertNull(contact);
+		}
+
+		contact = null;
+
+		try {
+			contact = new Contact("Li", "Constructorilor", "0712345678");
+			assertNotNull(contact);
+		} catch (InvalidFormatException e) {
+			fail();
+		}
+
+		contact = null;
+
+		try {
+			contact = new Contact("Bob", "Constructorilor", "0712345678");
+			assertNotNull(contact);
+		} catch (InvalidFormatException e) {
+			fail();
+		}
+
+		contact = null;
+
+		try {
+			contact = new Contact("Alexandru Constantinescu", "Constructorilor", "+40712345678");
+			assertNotNull(contact);
+		} catch (InvalidFormatException e) {
+			fail();
+		}
+
+		contact = null;
+
+		try {
+			contact = new Contact("Alexandru Constantinescul", "Constructorilor", "+40712345678");
+			assertNotNull(contact);
+		} catch (InvalidFormatException e) {
+			fail();
+		}
+
+		contact = null;
+
+		try {
+			contact = new Contact("Alexandru Constantinescule", "Constructorilor", "+40712345678");
+			fail();
+		} catch (InvalidFormatException e) {
+			assertNull(contact);
+		}
+	}
+
+	@Test
+	public void testNameWordCount()
+	{
+		try {
+			contact = new Contact("", "Constructorilor", "0712345678");
+			fail();
+		} catch (InvalidFormatException e) {
+			assertNull(contact);
+		}
+
+		contact = null;
+
+		try {
+			contact = new Contact("Tudor", "Constructorilor", "0712345678");
+			assertNotNull(contact);
+		} catch (InvalidFormatException e) {
+			fail();
+		}
+
+		contact = null;
+
+		try {
+			contact = new Contact("Tudor Tritean", "Constructorilor", "0712345678");
+			assertNotNull(contact);
+		} catch (InvalidFormatException e) {
+			fail();
+		}
+
+		contact = null;
+
+		try {
+			contact = new Contact("Tudor Adrian Tritean", "Constructorilor", "+40712345678");
+			fail();
+		} catch (InvalidFormatException e) {
+			assertNull(contact);
+		}
+	}
+
+	@Test
+	public void testAddressLength()
+	{
+		try {
+			contact = new Contact("Tudor", "Adr1", "0712345678");
+			fail();
+		} catch (InvalidFormatException e) {
+			assertNull(contact);
+		}
+
+		contact = null;
+
+		try {
+			contact = new Contact("Tudor", "Addr1", "0712345678");
+			assertNotNull(contact);
+		} catch (InvalidFormatException e) {
+			fail();
+		}
+
+		contact = null;
+
+		try {
+			contact = new Contact("Tudor", "Addr 1", "0712345678");
+			assertNotNull(contact);
+		} catch (InvalidFormatException e) {
+			fail();
+		}
+
+		contact = null;
+
+		try {
+			contact = new Contact("Tudor", "Strada Constantin 6", "+40712345678");
+			assertNotNull(contact);
+		} catch (InvalidFormatException e) {
+			assertNull(contact);
+		}
+
+		contact = null;
+
+		try {
+			contact = new Contact("Tudor", "Strada Constantin 62", "+40712345678");
+			assertNotNull(contact);
+		} catch (InvalidFormatException e) {
+			assertNull(contact);
+		}
+
+		contact = null;
+
+		try {
+			contact = new Contact("Tudor", "Strada Constantin 625", "+40712345678");
+			fail();
+		} catch (InvalidFormatException e) {
+			assertNull(contact);
 		}
 	}
 }
