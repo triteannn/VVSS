@@ -1,5 +1,6 @@
 package agenda.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -15,144 +16,97 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class AddActivityTest {
-	private Activity act;
-	private RepositoryActivity rep;
+	private Activity activity;
+	private RepositoryActivity repo;
 	
 	@Before
 	public void setUp() throws Exception {
-		rep = new RepositoryActivityMock();
+		repo = new RepositoryActivityMock();
 	}
-	
+
 	@Test
-	public void testCase1()
-	{
+	public void testNullActivity() {
+		assertEquals(0, repo.count());
+		activity = null;
+		repo.addActivity(activity);
+		assertEquals(0, repo.count());
+	}
+
+	@Test
+	public void testCoolActivityStandalone() {
+		assertEquals(0, repo.count());
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 		try {
-			act = new Activity("name1", 
-					df.parse("03/20/2013 12:00"), 
-					df.parse("03/20/2013 13:00"),
+			activity = new Activity("Cool activity",
+					df.parse("04/22/2019 14:00"),
+					df.parse("04/22/2019 16:00"),
 					null,
-					"Lunch break");
-			rep.addActivity(act);
+					"VVSS lab");
+			repo.addActivity(activity);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		assertTrue(1 == rep.count());
+		assertEquals(1, repo.count());
 	}
-	
+
 	@Test
-	public void testCase2()
-	{
+	public void testCoolActivityWithConflict() {
+		assertEquals(0, repo.count());
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-		try{
-			for (Activity a : rep.getActivities())
-				rep.removeActivity(a);
-			
-			act = new Activity("name1",
-					df.parse("03/20/2013 12:00"), 
-					df.parse("03/20/2013 13:00"),
+		try {
+			activity = new Activity("Less cool activity",
+					df.parse("04/22/2019 13:00"),
+					df.parse("04/22/2019 15:00"),
 					null,
-					"Lunch break");
-			rep.addActivity(act);
-			
-			act = new Activity("name1",
-					df.parse("03/21/2013 12:00"), 
-					df.parse("03/21/2013 13:00"),
+					"Some lab");
+			repo.addActivity(activity);
+
+			assertEquals(1, repo.count());
+
+			activity = new Activity("Cool activity",
+					df.parse("04/22/2019 14:00"),
+					df.parse("04/22/2019 16:00"),
 					null,
-					"Lunch break");
-			rep.addActivity(act);
+					"VVSS lab");
+			repo.addActivity(activity);
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
-		catch(Exception e){}	
-		int c = rep.count();
-		assertTrue( c == 2);
-		for (Activity a : rep.getActivities())
-			rep.removeActivity(a);
+		assertEquals(1, repo.count());
 	}
-	
+
 	@Test
-	public void testCase3()
-	{
+	public void testCoolActivityWithoutConflict() {
+		assertEquals(0, repo.count());
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-		try{
-			for (Activity a : rep.getActivities())
-				rep.removeActivity(a);
-			
-			act = new Activity("name1",
-					df.parse("03/20/2013 12:00"), 
-					df.parse("03/20/2013 13:00"),
+		try {
+			activity = new Activity("Nice activity",
+					df.parse("04/22/2019 10:00"),
+					df.parse("04/22/2019 12:00"),
 					null,
-					"Lunch break");
-			rep.addActivity(act);
-			
-			act = new Activity("name1",
-					df.parse("03/20/2013 12:30"), 
-					df.parse("03/20/2013 13:30"),
+					"VVSS Seminar");
+			repo.addActivity(activity);
+
+			assertEquals(1, repo.count());
+
+			activity = new Activity("Okay activity",
+					df.parse("04/22/2019 18:00"),
+					df.parse("04/22/2019 20:00"),
 					null,
-					"Lunch break");
-			assertFalse(rep.addActivity(act));
+					"PPD lab");
+			repo.addActivity(activity);
+
+			assertEquals(2, repo.count());
+
+			activity = new Activity("Cool activity",
+					df.parse("04/22/2019 14:00"),
+					df.parse("04/22/2019 16:00"),
+					null,
+					"VVSS lab");
+			repo.addActivity(activity);
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
-		catch(Exception e){}	
-		assertTrue( 1 == rep.count());
-		rep.saveActivities();
-		for (Activity a : rep.getActivities())
-			rep.removeActivity(a);
-	}
-	
-	@Test
-	public void testCase4()
-	{
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-		try{
-			for (Activity a : rep.getActivities())
-				rep.removeActivity(a);
-			
-			act = new Activity("name1",
-					df.parse("03/20/2013 12:00"), 
-					df.parse("03/20/2013 13:00"),
-					null,
-					"Lunch break");
-			rep.addActivity(act);
-			
-			act = new Activity("name1",
-					df.parse("03/20/2013 13:30"), 
-					df.parse("03/20/2013 14:00"),
-					null,
-					"Curs");
-			rep.addActivity(act);
-			
-			act = new Activity("name1",
-					df.parse("03/20/2013 13:30"), 
-					df.parse("03/20/2013 14:30"),
-					null,
-					"Lunch break");
-			assertFalse(rep.addActivity(act));			
-		}
-		catch(Exception e){}	
-		assertTrue( 2 == rep.count());
-		for (Activity a : rep.getActivities())
-			rep.removeActivity(a);
-	}
-	
-	@Test
-	public void testCase5()
-	{
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-		try{
-			for (Activity a : rep.getActivities())
-				rep.removeActivity(a);
-			
-			act = new Activity("name1",
-					df.parse("03/20/2013 12:00"), 
-					df.parse("03/20/2013 13:00"),
-					null,
-					"Lunch break");
-			rep.addActivity(act);
-			
-			assertFalse(rep.addActivity(act));			
-		}
-		catch(Exception e){}	
-		assertTrue( 1 == rep.count());
-		for (Activity a : rep.getActivities())
-			rep.removeActivity(a);
+		assertEquals(3, repo.count());
 	}
 }

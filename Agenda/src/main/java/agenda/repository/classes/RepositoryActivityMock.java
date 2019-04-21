@@ -49,28 +49,21 @@ public class RepositoryActivityMock implements RepositoryActivity {
 	public boolean addActivity(Activity activity) {
 		int  i = 0;
 		boolean conflicts = false;
-		
-		while( i < activities.size() )
-		{
-			if ( activities.get(i).getStartDate().compareTo(activity.getEndDate()) < 0 &&
-					activity.getStartDate().compareTo(activities.get(i).getEndDate()) < 0 )
-				conflicts = true;
-			i++;
-		}
-		if ( !conflicts )
-		{
-			activities.add(activity);
-			return true;
+		if (activity != null) {
+            while( i < activities.size() )
+            {
+                if ( activities.get(i).getStartDate().compareTo(activity.getEndDate()) < 0 &&
+                        activity.getStartDate().compareTo(activities.get(i).getEndDate()) < 0 )
+                    conflicts = true;
+                i++;
+            }
+            if ( !conflicts )
+            {
+                activities.add(activity);
+                return true;
+            }
 		}
 		return false;
-//		for (int i = 0; i< activities.size(); i++)
-//		{
-//			if (activity.intersect(activities.get(i))) return false;
-//		}	
-//		int index = activities.indexOf(activity);
-//		//if (index >= 0 ) return false;
-//		activities.add(activity);
-//		return true;
 	}
 
 	@Override
