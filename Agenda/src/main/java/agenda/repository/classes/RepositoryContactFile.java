@@ -54,8 +54,9 @@ public class RepositoryContactFile implements RepositoryContact {
 	}
 
 	@Override
-	public void addContact(Contact contact) {
+	public Contact addContact(Contact contact) {
 		contacts.add(contact);
+		return contact;
 	}
 
 	@Override

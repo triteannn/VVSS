@@ -46,7 +46,7 @@ public class RepositoryActivityMock implements RepositoryActivity {
 	}
 
 	@Override
-	public boolean addActivity(Activity activity) {
+	public Activity addActivity(Activity activity) {
 		int  i = 0;
 		boolean conflicts = false;
 		if (activity != null) {
@@ -60,10 +60,10 @@ public class RepositoryActivityMock implements RepositoryActivity {
             if ( !conflicts )
             {
                 activities.add(activity);
-                return true;
+                return activity;
             }
 		}
-		return false;
+		return null;
 	}
 
 	@Override

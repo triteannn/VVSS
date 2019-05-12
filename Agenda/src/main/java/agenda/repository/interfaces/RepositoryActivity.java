@@ -8,7 +8,7 @@ import agenda.model.Activity;
 public interface RepositoryActivity {
 
 	List<Activity> getActivities();
-	boolean addActivity(Activity activity);
+	Activity addActivity(Activity activity);
 	boolean removeActivity(Activity activity);
 	boolean saveActivities();
 	int count();

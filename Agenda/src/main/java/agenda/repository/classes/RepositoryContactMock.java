@@ -32,8 +32,9 @@ private List<Contact> contacts;
 	}
 
 	@Override
-	public void addContact(Contact contact) {
+	public Contact addContact(Contact contact) {
 		contacts.add(contact);
+		return contact;
 	}
 
 	@Override

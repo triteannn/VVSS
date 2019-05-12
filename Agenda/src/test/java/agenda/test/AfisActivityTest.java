@@ -2,6 +2,9 @@ package agenda.test;
 
 import static org.junit.Assert.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
@@ -10,8 +13,8 @@ import java.util.List;
 import agenda.model.Activity;
 import agenda.model.Contact;
 import agenda.repository.classes.RepositoryActivityFile;
+import agenda.repository.classes.RepositoryActivityMock;
 import agenda.repository.classes.RepositoryContactFile;
-import agenda.repository.interfaces.RepositoryActivity;
 import agenda.repository.interfaces.RepositoryContact;
 
 import org.junit.Before;
@@ -19,99 +22,63 @@ import org.junit.Test;
 
 public class AfisActivityTest {
 
-	RepositoryActivity rep;
+	private RepositoryActivityMock repo;
 
 	@Before
-	public void setUp() throws Exception {
-		RepositoryContact repcon = new RepositoryContactFile();
-		rep = new RepositoryActivityFile(repcon);
+	public void setUp() {
+		repo = new RepositoryActivityMock();
 	}
 
 	@Test
-	public void testCase1() {
-		for (Activity act : rep.getActivities())
-			rep.removeActivity(act);
-
-		Calendar c = Calendar.getInstance();
-		c.set(2013, 3 - 1, 20, 12, 00);
-		Date start = c.getTime();
-
-		c.set(2013, 3 - 1, 20, 12, 30);
-		Date end = c.getTime();
-
-		Activity act = new Activity("name1", start, end,
-				new LinkedList<Contact>(), "description2");
-
-		rep.addActivity(act);
-
-		c.set(2013, 3 - 1, 20);
-
-		List<Activity> result = rep.activitiesOnDate("name1", c.getTime());
-		assertTrue(result.size() == 1);
-	}
-
-	@Test
-	public void testCase2() {
-		for (Activity act : rep.getActivities())
-			rep.removeActivity(act);
-
-		Calendar c = Calendar.getInstance();
-		c.set(2013, 3 - 1, 20, 12, 00);
-		Date start = c.getTime();
-
-		c.set(2013, 3 - 1, 20, 12, 30);
-		Date end = c.getTime();
-
-		Activity act = new Activity("name1", start, end,
-				new LinkedList<Contact>(), "description2");
-
-		rep.addActivity(act);
-
-		c.set(2013, 3 - 1, 20);
+	public void testExistingActivity() {
+		assertEquals(0, repo.count());
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 		try {
-			rep.activitiesOnDate(((Object) 1).toString(), c.getTime());
-		} catch (Exception e) {
-			assertTrue(true);
+			Date start = df.parse("04/22/2019 14:00");
+			Date end = df.parse("04/22/2019 16:00");
+
+			Activity activity = new Activity(
+					"Cool activity",
+					 start,
+					 end,
+					null,
+					"VVSS lab");
+			repo.addActivity(activity);
+
+			assertEquals(1, repo.count());
+
+			List<Activity> result = repo.activitiesOnDate("Cool activity", start);
+
+			assertTrue(!result.isEmpty());
+			assertEquals("Cool activity", result.get(0).getName());
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
 	}
-	
-	@Test
-	public void testCase3() {
-		for (Activity act : rep.getActivities())
-			rep.removeActivity(act);
 
-		try {
-			rep.activitiesOnDate("name1", (Date)(Object)"ASD");
-		} catch (Exception e) {
-			assertTrue(true);
-		}
-	}
-	
 	@Test
-	public void testCase4() {
-		for (Activity act : rep.getActivities())
-			rep.removeActivity(act);
+	public void testNonExistingActivity() {
+		assertEquals(0, repo.count());
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+		try {
+			Date start = df.parse("04/22/2019 14:00");
+			Date end = df.parse("04/22/2019 16:00");
 
-		try {
-			rep.addActivity((Activity)(Object)1);
-			
-			Calendar c = Calendar.getInstance();
-			c.set(2013, 3 - 1, 20);
-			rep.activitiesOnDate("name1", c.getTime());
-		} catch (Exception e) {
-			assertTrue(true);
+			Activity activity = new Activity(
+					"Cool activity",
+					start,
+					end,
+					null,
+					"VVSS lab");
+			repo.addActivity(activity);
+
+			assertEquals(1, repo.count());
+
+			List<Activity> result = repo.activitiesOnDate("Bad activity", start);
+
+			assertTrue(result.isEmpty());
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
-	}
-	
-	@Test
-	public void testCase5() {
-		for (Activity act : rep.getActivities())
-			rep.removeActivity(act);
-	
-		Calendar c = Calendar.getInstance();
-		c.set(2013, 3 - 1, 20);
-		List<Activity> result = rep.activitiesOnDate("name1", c.getTime());
-		
-		assertTrue(result.size() == 0);
 	}
 }

@@ -50,7 +50,7 @@ public class RepositoryActivityFile implements RepositoryActivity{
 	}
 
 	@Override
-	public boolean addActivity(Activity activity) {
+	public Activity addActivity(Activity activity) {
 		int  i = 0;
 		boolean conflicts = false;
 
@@ -63,10 +63,10 @@ public class RepositoryActivityFile implements RepositoryActivity{
             }
             if ( !conflicts ) {
                 activities.add(activity);
-                return true;
+                return activity;
             }
         }
-		return false;
+		return null;
 	}
 
 	@Override

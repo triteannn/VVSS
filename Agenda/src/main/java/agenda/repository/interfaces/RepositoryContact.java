@@ -7,7 +7,7 @@ import agenda.model.Contact;
 public interface RepositoryContact {
 
 	List<Contact> getContacts();
-	void addContact(Contact contact);
+	Contact addContact(Contact contact);
 	boolean removeContact(Contact contact);
 	boolean saveContracts();
 	int count();
