@@ -20,6 +20,12 @@ public class SwitchColorThemeStory {
     @Test
     public void switch_to_dark_theme() {
         anna.is_the_home_page();
-        anna.switch_theme();
+        anna.switch_to_dark_theme();
+    }
+
+    @Test
+    public void try_switching_to_the_already_applied_theme() {
+        anna.is_the_home_page();
+        anna.switch_to_light_theme();
     }
 }
